@@ -3,6 +3,7 @@ import sqlite3
 from tkinter import messagebox, Menu
 import requests # helps us to get the data
 import json # helps us to pass the data
+from plyer import notification
 
 pycrypto = Tk()
 pycrypto.title("My Crypto Portfolio")
@@ -186,7 +187,7 @@ def my_portfolio():
                        borderwidth=2, relief="groove")
     total_curr.grid(row=c, column=5, sticky=N + S + E + W)
 
-
+    hello = net_pl_amount
     net_pl_amount = Label(pycrypto, text=int(net_pl_amount), bg="white", fg=font_color(float("{0:0.2f}".format(net_pl_amount))), font=("Arial Bold", 10), padx="5", pady="5", borderwidth=2, relief="groove")
     net_pl_amount.grid(row=c, column=7, sticky=N + S + E + W)
 
@@ -196,6 +197,21 @@ def my_portfolio():
     refresh.grid(row=c+1, column=7, sticky=N + S + E + W)
 
     print("And hence the net amount for portfolio is ", net_pl_amount)
+    #net_pl_amount = net_pl_amount.astype('int')
+    if hello < 0:
+        notification.notify(
+            title="welcome to CoinMarketCap portfolio",
+            message="Your going to losses",
+            app_icon=None,
+            timeout=100,
+        )
+    else:
+        notification.notify(
+            title="welcome to CoinMarketCap portfolio",
+            message="Your in gain",
+            app_icon=None,
+            timeout=100,
+        )
 
 def app_header():
     portfolio_id = Label(pycrypto, text="Serial No.", bg="dark blue", fg="white",
@@ -232,6 +248,8 @@ def app_header():
 
 app_navig()
 app_header()
+
+
 my_portfolio()
 
 pycrypto.mainloop()
