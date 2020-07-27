@@ -116,7 +116,7 @@ def my_portfolio():
                              font=("Arial Bold", 10), padx="5", pady="5", borderwidth=2, relief="groove")
                 portfolio_id.grid(row=c, column=0, sticky=N + S + E + W)
 
-                name = Label(pycrypto, text=api['data'][i]['name'], bg="light grey", fg="black", font=("Arial Bold", 10), padx="5", pady="5", borderwidth=2, relief="groove")
+                name = Label(pycrypto, text=api['data'][i]['name'] + " " + api['data'][i]['symbol'] , bg="light grey", fg="black", font=("Arial Bold", 10), padx="5", pady="5", borderwidth=2, relief="groove")
                 name.grid(row=c, column=1, sticky=N+S+E+W)
 
                 price = Label(pycrypto, text="{0:.2f}".format(api['data'][i]['quote']['USD']['price']), bg="light grey", fg="black", font=("Arial Bold", 10), padx="5", pady="5", borderwidth=2, relief="groove")
@@ -140,7 +140,7 @@ def my_portfolio():
                 c += 1
 
     # INSERT DATA
-    symbol_txt = Entry(pycrypto, borderwidth=2, relief="groove")
+    symbol_txt = Entry(pycrypto, borderwidth=2, relief="groove", name='symbol')
     symbol_txt.grid(row=c+1, column=1)
 
     price_txt = Entry(pycrypto, borderwidth=2, relief="groove")
@@ -197,21 +197,28 @@ def my_portfolio():
     refresh.grid(row=c+1, column=7, sticky=N + S + E + W)
 
     print("And hence the net amount for portfolio is ", net_pl_amount)
-    #net_pl_amount = net_pl_amount.astype('int')
     if hello < 0:
         notification.notify(
             title="welcome to CoinMarketCap portfolio",
-            message="Your going to losses",
+            message="Hey, Your shares went down !! Do you wanna sell your shares? ",
+            app_icon=None,
+            timeout=100,
+        )
+    elif hello == 0:
+        notification.notify(
+            title="welcome to CoinMarketCap portfolio",
+            message="Hey,You are on safe side, you don't have loss on your investments",
             app_icon=None,
             timeout=100,
         )
     else:
         notification.notify(
             title="welcome to CoinMarketCap portfolio",
-            message="Your in gain",
+            message="Hurray,Your shares are growing. Congratulations!! Keep going",
             app_icon=None,
             timeout=100,
-        )
+    )
+
 
 def app_header():
     portfolio_id = Label(pycrypto, text="Serial No.", bg="dark blue", fg="white",
