@@ -178,6 +178,7 @@ def my_portfolio():
     delete_coin_txt.grid(row=c + 3, column=4, sticky=N + S + E + W)
 
     # --------------------------------------------#
+    amount_invest = total_amount_paid
     total_amount_paid = Label(pycrypto, text=int(total_amount_paid), bg="white", fg="blue", font=("Arial Bold", 10),
                               padx="5",
                               pady="5", borderwidth=2, relief="groove")
@@ -187,7 +188,7 @@ def my_portfolio():
                        borderwidth=2, relief="groove")
     total_curr.grid(row=c, column=5, sticky=N + S + E + W)
 
-    hello = net_pl_amount
+    curr_amount = net_pl_amount
     net_pl_amount = Label(pycrypto, text=int(net_pl_amount), bg="white", fg=font_color(float("{0:0.2f}".format(net_pl_amount))), font=("Arial Bold", 10), padx="5", pady="5", borderwidth=2, relief="groove")
     net_pl_amount.grid(row=c, column=7, sticky=N + S + E + W)
 
@@ -197,21 +198,14 @@ def my_portfolio():
     refresh.grid(row=c+1, column=7, sticky=N + S + E + W)
 
     print("And hence the net amount for portfolio is ", net_pl_amount)
-    if hello < 0:
+    if curr_amount < (0.9*amount_invest):
         notification.notify(
             title="welcome to CoinMarketCap portfolio",
             message="Hey, Your shares went down !! Do you wanna sell your shares? ",
             app_icon=None,
             timeout=100,
         )
-    elif hello == 0:
-        notification.notify(
-            title="welcome to CoinMarketCap portfolio",
-            message="Hey,You are on safe side, you don't have loss on your investments",
-            app_icon=None,
-            timeout=100,
-        )
-    else:
+    elif curr_amount > (1.1*amount_invest):
         notification.notify(
             title="welcome to CoinMarketCap portfolio",
             message="Hurray,Your shares are growing. Congratulations!! Keep going",
